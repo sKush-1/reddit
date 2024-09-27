@@ -1,0 +1,39 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "tsc -b  && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.3",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "@mikro-orm/cli": "^6.3.11",
+    "@mikro-orm/core": "^6.3.11",
+    "@mikro-orm/migrations": "^6.3.11",
+    "@mikro-orm/postgresql": "^6.3.11",
+    "@mikro-orm/reflection": "^6.3.11",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "graphql": "^16.9.0",
+    "pg": "^8.13.0",
+    "reflect-metadata": "^0.2.2",
+    "type-graphql": "2.0.0-rc.2"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/mikro-orm.config.ts",
+      "./dist/mikro-orm.config.js"
+    ]
+  }
+}
