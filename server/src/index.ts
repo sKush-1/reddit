@@ -1,21 +1,15 @@
-import { MikroORM, RequiredEntityData } from "@mikro-orm/core";
+import { MikroORM } from "@mikro-orm/core";
 import "reflect-metadata";
 import { __prod__ } from "./constants";
-import { Post } from "./entities/Post";
 import microconfig from "./mikro-orm.config";
 import express from "express";
 import dotenv from "dotenv";
-import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { buildSchema } from "type-graphql";
-import { HelloResolver } from "./resolvers/hello";
-import { PostResolver } from "./resolvers/post";
+
 import createApolloServer from "./graphql";
 
 dotenv.config();
 
-const DB_password = process.env.DB_PASSWORD;
-console.log(typeof(DB_password), DB_password)
 
 const main = async () => {
   const orm = await MikroORM.init(microconfig);
