@@ -7,7 +7,7 @@ const Register: React.FC<registerProps> = ({}) => {
   return (
     <Formik
         initialValues={{ email: "", username: "", password: "" }}
-        onSubmit={async (values, { setErrors }) => {
+        onSubmit={async () => {
           
         }}
 
