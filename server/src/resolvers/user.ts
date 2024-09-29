@@ -8,7 +8,7 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
-import {z} from "zod"
+import {nullable, z} from "zod"
 import { MyContext } from "../types";
 import { User } from "../entities/User";
 import { RequiredEntityData } from "@mikro-orm/core";
@@ -48,6 +48,21 @@ class UserResponse {
 
 @Resolver()
 export class UserResolver {
+
+  @Query(() => User, {nullable: true})
+  async me(
+    @Ctx() {req,em} : MyContext
+  ){
+    if(!req.session.userId) return null;
+    try {
+      const UserID = Number(req.session.userId);
+
+      const user = await em.findOne(User, {id: UserID  })
+      return user;
+    } catch (error) {
+      return null;
+    }
+  }
   @Mutation(() => User)
   async register(
     @Arg("options", () => UserInput) options: UserInput,
@@ -71,7 +86,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async login(
     @Arg("options", () => UserInput) options: UserInput,
-    @Ctx() { em }: MyContext
+    @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
 
     try {
@@ -102,8 +117,9 @@ export class UserResolver {
           ],
         };
       }
-  
-  
+      
+      req.session.userId = `${user.id}`;
+
       return {
         user
       };
@@ -120,8 +136,5 @@ export class UserResolver {
     }
   }
 
-  @Query(() => [User])
-  users(@Ctx() { em }: MyContext): Promise<User[]> {
-    return em.find(User, {});
-  }
+  
 }
