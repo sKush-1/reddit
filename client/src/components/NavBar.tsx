@@ -1,14 +1,16 @@
 import { Box, Button, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { useQuery } from 'urql';
-import { MeDocument } from '../gql/graphql';
+import { useMutation, useQuery } from 'urql';
+import { LogoutDocument, MeDocument, PostsDocument } from '../gql/graphql';
 
 interface NavBarProps {
 
 }
 
 const NavBar: React.FC<NavBarProps>= () => {
+  const [_,logout] = useMutation(LogoutDocument)
+
   const [{data, fetching}] = useQuery({query: MeDocument});
   let body = null;
 
@@ -30,17 +32,25 @@ const NavBar: React.FC<NavBarProps>= () => {
       <Box mr={2}>
         {data.me.username}
       </Box>
-      <Button variant="link">Logout</Button>
+      <Button onClick={async() => {
+          logout({});
+      }}  variant="link">Logout</Button>
       </Flex>
       </>
     )
   }
+
+  const [{data: postData}] = useQuery({query: PostsDocument});
+
   return (
+    <>
     <Flex bg='tomato' p={4} ml={'auto'}>
         <Box ml={'auto'}>
         {body}
         </Box>
     </Flex>
+    {!postData?.posts ? <div>Loading</div> : postData.posts.map(p => <div key={p._id}>{p.title}</div>)}
+    </>
   )
 }
 

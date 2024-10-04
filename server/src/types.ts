@@ -1,5 +1,7 @@
 import { Connection, EntityManager, IDatabaseDriver } from "@mikro-orm/core"
-import { Request, Response, Express } from "express";
+import { Request, Response,} from "express";
+import { RedisClientType } from "redis";
+
 
 // 
 declare module 'express-session' {
@@ -12,4 +14,5 @@ export type MyContext =  {
     em: EntityManager<IDatabaseDriver<Connection>>;
     req: Request & {session: Express.SessionStore} ;
     res: Response;
+    redisClient: RedisClientType
 }

@@ -1,6 +1,6 @@
 #import "../fragments/regularUser.graphql"
 
-mutation Login($options: UserInput!) {
+mutation Login($options: UserBaseInput!) {
   login(options: $options) {
     user {
       ...RegularUser

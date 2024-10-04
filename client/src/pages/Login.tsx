@@ -1,12 +1,12 @@
 import React from "react";
 import { Form, Formik } from "formik";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Wrapper from "../components/Wrapper";
 import { InputField } from "../components/InputField";
 import { LoginDocument } from "../gql/graphql";
 import { useMutation } from "urql";
 import { toErrorMap } from "../utils/toErrorMap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface registerProps {}
 
@@ -38,22 +38,23 @@ const Login: React.FC<registerProps> = ({}) => {
           <Form>
             <InputField
               name="username"
-              placeholder="username"
-              label="Username"
+              placeholder="username or email"
+              label="Username or Email"
             />
 
             <Box mt={4}>
               <InputField
                 name="password"
                 placeholder="Password"
-                label="password"
+                label="Password"
               />
             </Box>
 
-            <Button mt={4} type="submit" isLoading={isSubmitting}>
+            <Button mt={4} mr={10} type="submit" isLoading={isSubmitting}>
               {" "}
               Login
             </Button>
+            <Link  to="/forgot-password"><Text color={"red"} mt={2}>Forgot Password?</Text></Link>
           </Form>
         )}
       </Formik>

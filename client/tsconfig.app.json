@@ -20,5 +20,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/vite-env.d.ts"]
+  "include": ["src", "src/vite-env.d.ts", "../server/utils/sendEmail.ts"]
 }
