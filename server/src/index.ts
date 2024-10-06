@@ -1,4 +1,4 @@
-import { MikroORM } from "@mikro-orm/core";
+import { MikroORM,EntityManager } from '@mikro-orm/postgresql';
 import "reflect-metadata";
 import { __prod__, COOKIENAME } from "./constants";
 import microconfig from "./mikro-orm.config";
@@ -21,6 +21,7 @@ const main = async () => {
   
   const orm = await MikroORM.init(microconfig);
   await orm.getMigrator().up();
+  const em = orm.em as EntityManager;  
 
   const PORT = process.env.PORT || 3000;
 
@@ -65,7 +66,7 @@ const main = async () => {
   app.use(
     "/graphql",
     expressMiddleware(await createApolloServer(), {
-      context: async ({ req, res }) => ({ em: orm.em, req, res, redisClient}),
+      context: async ({ req, res }) => ({ em: em, req, res, redisClient}),
     })
   );
 
@@ -73,6 +74,7 @@ const main = async () => {
     console.log(`Server is up and listening on PORT:${PORT}`);
   });
 };
+
 
 main().catch((error) => {
   console.log(error);

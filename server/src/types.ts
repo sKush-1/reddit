@@ -1,4 +1,5 @@
-import { Connection, EntityManager, IDatabaseDriver } from "@mikro-orm/core"
+import {  EntityManager } from "@mikro-orm/postgresql"
+import { AbstractSqlConnection, AbstractSqlDriver, AbstractSqlPlatform } from "@mikro-orm/postgresql";
 import { Request, Response,} from "express";
 import { RedisClientType } from "redis";
 
@@ -11,7 +12,7 @@ declare module 'express-session' {
   }
 
 export type MyContext =  {
-    em: EntityManager<IDatabaseDriver<Connection>>;
+    em: EntityManager<AbstractSqlDriver<AbstractSqlConnection, AbstractSqlPlatform>>;
     req: Request & {session: Express.SessionStore} ;
     res: Response;
     redisClient: RedisClientType

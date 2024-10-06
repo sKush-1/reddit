@@ -1,35 +1,43 @@
-import {Arg, Ctx, Int, Mutation, Query, Resolver} from "type-graphql"
+import {Arg, Ctx, Int, Mutation, Query, Resolver, UseMiddleware} from "type-graphql"
 import { Post } from "../entities/Post";
 import { MyContext } from "../types";
 import { RequiredEntityData } from "@mikro-orm/core";
-import { User } from "../entities/User";
+import { isAuth } from "../middleware/isAuth"
 
 @Resolver()
 export class PostResolver {
-    @Query(() => [Post])
-    posts(@Ctx() {em}: MyContext): Promise<Post[]> {
-        return em.find(Post, {});
-    }
 
-    @Query(() => Post, { nullable: true})
-    post(
-        @Arg("id", () => Int) id:number,
-        @Ctx() {em}: MyContext
-    ): Promise<Post | null> {
-        return em.findOne(Post, {_id:id})
-    }
+    @Query(() => [Post], { nullable: true })
+async post(
+    @Arg('limit', () => Number) limit: number,
+    @Arg("startDate", () => String, { nullable: true }) startDate: string | undefined,
+    @Ctx() { em }: MyContext
+): Promise<Post[]> {
+    const realLimit = Math.min(50, limit);
+    const qb = em.createQueryBuilder(Post, "p")
+        .orderBy({ createdAt: 'desc' }) // Assuming you want to order by createdAt ASC
+        .limit(realLimit);
+
+        if (startDate) {
+            const formattedDate = new Date(startDate).toISOString().slice(0, 10);
+            qb.where({
+                createdAt: { $gte: formattedDate } 
+            });
+        }
+
+    return await qb.getResultList();
+}
+
 
     @Mutation(() => Post)
+    @UseMiddleware(isAuth)
     async createPost(
         @Arg("title", () => String) title: string,
         @Arg("text", () => String) text: string,
         @Ctx() { em ,req}: MyContext
-    ): Promise<Post | String>  {
-        if(!req.session.userId){
-            return "User not signed in";
-        }
+    ): Promise<Post>  {
+        
         const userID = Number(req.session.userId);
-        const user = await em.findOne(User,{id:userID});        
 
         const post = em.create(Post, {
             title,

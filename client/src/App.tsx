@@ -9,6 +9,7 @@ import { client } from "./utils/createUrqlClient";
 import ChangePassword from "./pages/ChangePassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import { Toaster } from "react-hot-toast";
+import CreatePost from "./pages/CreatePost";
 
 
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword/>
+  },
+  {
+    path: "/create-post",
+    element: <CreatePost/>
   }
 ]);
 
