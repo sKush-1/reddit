@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom';
 import Wrapper from '../components/Wrapper';
 import { Form, Formik } from 'formik';
 import { InputField } from '../components/InputField';
-import { Box, Button } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { useMutation } from 'urql';
 import { ChangePasswordDocument } from '../gql/graphql';
 import { toErrorMap } from '../utils/toErrorMap';

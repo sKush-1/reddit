@@ -15,10 +15,10 @@ const CreatePost: React.FC<createPostProps> = ({}) => {
     const navigate = useNavigate();
   const [{data, fetching}] = useQuery({query: MeDocument});
   useEffect(() => {
-    if(!data?.me){
+    if(!data?.me && !fetching){
         navigate("/login")
     }
-  },[fetching,data])
+  },[data,fetching])
   const [, register] = useMutation(CreatePostDocument);
 
   return (
@@ -38,7 +38,7 @@ const CreatePost: React.FC<createPostProps> = ({}) => {
             toast.success("Post created");
           }
           else{
-            toast.success("Failed to post");
+            toast.error("Failed to post");
           }
           
         }}

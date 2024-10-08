@@ -15,8 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "fragment RegularUser on User {\n  id\n  username\n}": types.RegularUserFragmentDoc,
     "mutation CreatePost($text: String!, $title: String!) {\n  createPost(text: $text, title: $title) {\n    title\n    text\n    creatorId\n    points\n    _id\n  }\n}": types.CreatePostDocument,
+    "query Post($startDate: String!, $limit: Float!) {\n  post(startDate: $startDate, limit: $limit) {\n    _id\n    title\n    textSnippet\n    points\n    creatorId\n  }\n}": types.PostDocument,
     "query Me {\n  me {\n    id\n    username\n  }\n}": types.MeDocument,
-    "query Posts {\n  posts {\n    _id\n    title\n    createdAt\n    updatedAt\n  }\n}": types.PostsDocument,
     "mutation ChangePassword($newPassword: String!, $token: String!) {\n  changePassword(newPassword: $newPassword, token: $token) {\n    user {\n      email\n      username\n    }\n    errors {\n      field\n      message\n    }\n  }\n}": types.ChangePasswordDocument,
     "mutation ForgotPassword($email: String!) {\n  forgotPassword(email: $email)\n}": types.ForgotPasswordDocument,
     "mutation Login($options: UserBaseInput!) {\n  login(options: $options) {\n    user {\n      ...RegularUser\n    }\n    errors {\n      field\n      message\n    }\n  }\n}": types.LoginDocument,
@@ -49,11 +49,11 @@ export function graphql(source: "mutation CreatePost($text: String!, $title: Str
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Me {\n  me {\n    id\n    username\n  }\n}"): (typeof documents)["query Me {\n  me {\n    id\n    username\n  }\n}"];
+export function graphql(source: "query Post($startDate: String!, $limit: Float!) {\n  post(startDate: $startDate, limit: $limit) {\n    _id\n    title\n    textSnippet\n    points\n    creatorId\n  }\n}"): (typeof documents)["query Post($startDate: String!, $limit: Float!) {\n  post(startDate: $startDate, limit: $limit) {\n    _id\n    title\n    textSnippet\n    points\n    creatorId\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Posts {\n  posts {\n    _id\n    title\n    createdAt\n    updatedAt\n  }\n}"): (typeof documents)["query Posts {\n  posts {\n    _id\n    title\n    createdAt\n    updatedAt\n  }\n}"];
+export function graphql(source: "query Me {\n  me {\n    id\n    username\n  }\n}"): (typeof documents)["query Me {\n  me {\n    id\n    username\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

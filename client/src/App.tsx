@@ -3,20 +3,20 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import NavBar from "./components/NavBar";
 import { Provider } from "urql";
 import { client } from "./utils/createUrqlClient";
 import ChangePassword from "./pages/ChangePassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import { Toaster } from "react-hot-toast";
 import CreatePost from "./pages/CreatePost";
+import Home from "./pages/Home";
 
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <NavBar/>
+    element: <Home/>
   },
   {
     path: "/register",

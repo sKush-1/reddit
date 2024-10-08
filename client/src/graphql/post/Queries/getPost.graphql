@@ -1,0 +1,9 @@
+query Post($startDate: String!, $limit: Float!) {
+  post(startDate: $startDate, limit: $limit) {
+    _id,
+    title,
+    textSnippet,
+    points,
+    creatorId,
+  }
+}

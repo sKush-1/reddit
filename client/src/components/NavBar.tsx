@@ -2,7 +2,7 @@ import { Box, Button, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from 'urql';
-import { LogoutDocument, MeDocument, PostsDocument } from '../gql/graphql';
+import { LogoutDocument, MeDocument} from '../gql/graphql';
 
 interface NavBarProps {
 
@@ -40,7 +40,6 @@ const NavBar: React.FC<NavBarProps>= () => {
     )
   }
 
-  const [{data: postData}] = useQuery({query: PostsDocument});
 
   return (
     <>
@@ -49,7 +48,6 @@ const NavBar: React.FC<NavBarProps>= () => {
         {body}
         </Box>
     </Flex>
-    {!postData?.posts ? <div>Loading</div> : postData.posts.map(p => <div key={p._id}>{p.title}</div>)}
     </>
   )
 }
